@@ -4,6 +4,13 @@ const multer = require("multer");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const path = require("path");
+const fs = require('fs');
+
+// Ensure 'uploads' folder exists at runtime
+const uploadsPath = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsPath)) {
+    fs.mkdirSync(uploadsPath);
+}
 
 const app = express();
 app.use(cors({ origin: "https://multer-frontend.onrender.com" }));
