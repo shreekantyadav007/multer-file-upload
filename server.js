@@ -15,7 +15,7 @@ if (!fs.existsSync(uploadsPath)) {
 const app = express();
 app.use(cors({ origin: "https://multer-frontend.onrender.com" }));
 app.use(bodyParser.json());
-app.use('/uploads', express.static('uploads'));
+
 
 mongoose
   .connect(
@@ -42,6 +42,8 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage: storage });
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.post("/upload", upload.single("file"), async (req, res) => {
   try {
