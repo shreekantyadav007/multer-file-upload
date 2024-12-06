@@ -46,16 +46,21 @@ const upload = multer({ storage: storage });
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.post("/upload", upload.single("file"), async (req, res) => {
+   if (!req.file) {
+        return res.status(400).send('No file uploaded.');
+    }  
   try {
     const file = new File({
       filename: req.file.filename,
       path: req.file.path,
     });
     await file.save();
-    res.status(200).json({ message: "File uploaded successfully" });
+    res.status(200).send(`File uploaded: <a href="/uploads/${req.file.filename}">${req.file.filename}</a>`); //.json({ message: "File uploaded successfully" });
+      
   } catch (err) {
     res.status(500).json({ error: "Error yploading file" });
   }
+     
 });
 
 app.get("/files", async (req, res) => {
