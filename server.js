@@ -15,7 +15,7 @@ if (!fs.existsSync(uploadsPath)) {
 const app = express();
 app.use(cors({ origin: "https://multer-frontend.onrender.com" }));
 app.use(bodyParser.json());
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use('/uploads', express.static('uploads'));
 
 mongoose
   .connect(
